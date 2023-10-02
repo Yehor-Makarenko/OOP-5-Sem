@@ -1,8 +1,9 @@
 package Candies.ChocolateCandies.ChocolateCandiesWithFilling.ChocolateLiquorCandy;
 
+import Candies.ChocolateCandies.ChocolateCandiesWithFilling.ChocolateCandyWithFilling;
 import Candies.IngredientTypes.FillingType;
 
-public class ChocolateLiquorCandy {
+public class ChocolateLiquorCandy extends ChocolateCandyWithFilling {
   private static int weight = 25;
   private static int sugarLevel = 10;
   private static int calorieContent = 80;
