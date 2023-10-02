@@ -1,4 +1,4 @@
-package Candies;
+package Java.Candies;
 
 import java.time.LocalDate;
 

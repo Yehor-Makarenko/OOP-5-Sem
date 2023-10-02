@@ -1,7 +1,7 @@
-package Candies.ChocolateCandies.ChocolateCandiesWithFilling.ChocolateLiquorCandy;
+package Java.Candies.ChocolateCandies.ChocolateCandiesWithFilling.ChocolateLiquorCandy;
 
-import Candies.ChocolateCandies.ChocolateCandiesWithFilling.ChocolateCandyWithFilling;
-import Candies.IngredientTypes.FillingType;
+import Java.Candies.ChocolateCandies.ChocolateCandiesWithFilling.ChocolateCandyWithFilling;
+import Java.Candies.IngredientTypes.FillingType;
 
 public class ChocolateLiquorCandy extends ChocolateCandyWithFilling {
   private static int weight = 25;

@@ -1,6 +1,6 @@
-package Candies.Lollipop;
+package Java.Candies.Lollipop;
 
-import Candies.Candy;
+import Java.Candies.Candy;
 
 public class Lollipop extends Candy {
   private static int weight = 8;

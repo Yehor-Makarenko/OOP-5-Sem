@@ -1,4 +1,4 @@
-package Candies.IngredientTypes;
+package Java.Candies.IngredientTypes;
 
 public enum FillingType {
   NUT("Nut"),

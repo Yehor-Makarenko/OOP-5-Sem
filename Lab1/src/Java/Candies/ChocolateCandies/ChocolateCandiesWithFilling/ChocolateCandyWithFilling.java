@@ -1,7 +1,7 @@
-package Candies.ChocolateCandies.ChocolateCandiesWithFilling;
+package Java.Candies.ChocolateCandies.ChocolateCandiesWithFilling;
 
-import Candies.Candy;
-import Candies.IngredientTypes.FillingType;
+import Java.Candies.Candy;
+import Java.Candies.IngredientTypes.FillingType;
 
 public abstract class ChocolateCandyWithFilling extends Candy {
   private FillingType filling;

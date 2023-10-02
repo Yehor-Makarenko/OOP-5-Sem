@@ -1,6 +1,6 @@
-package Candies.JellyCandy;
+package Java.Candies.JellyCandy;
 
-import Candies.Candy;
+import Java.Candies.Candy;
 
 public class JellyCandy extends Candy {
   private static int weight = 18;
