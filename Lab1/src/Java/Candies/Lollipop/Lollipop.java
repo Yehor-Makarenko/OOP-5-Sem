@@ -1,5 +1,7 @@
 package Java.Candies.Lollipop;
 
+import java.sql.Date;
+
 import Java.Candies.Candy;
 
 public class Lollipop extends Candy {
@@ -10,5 +12,9 @@ public class Lollipop extends Candy {
 
   public Lollipop() {
     super(weight, sugarLevel, calorieContent, shelfLifeMonths);
+  }
+
+  public Lollipop(Date expirationDate) {
+    super(weight, sugarLevel, calorieContent, expirationDate);
   }
 }

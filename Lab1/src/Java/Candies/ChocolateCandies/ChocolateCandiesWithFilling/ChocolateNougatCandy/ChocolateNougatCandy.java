@@ -1,5 +1,7 @@
 package Java.Candies.ChocolateCandies.ChocolateCandiesWithFilling.ChocolateNougatCandy;
 
+import java.sql.Date;
+
 import Java.Candies.ChocolateCandies.ChocolateCandiesWithFilling.ChocolateCandyWithFilling;
 import Java.Candies.IngredientTypes.FillingType;
 
@@ -12,5 +14,9 @@ public class ChocolateNougatCandy extends ChocolateCandyWithFilling {
 
   public ChocolateNougatCandy() {
     super(weight, sugarLevel, calorieContent, shelfLifeMonths, filling);
+  }
+
+  public ChocolateNougatCandy(Date expirationDate) {
+    super(weight, sugarLevel, calorieContent, expirationDate, filling);
   }
 }

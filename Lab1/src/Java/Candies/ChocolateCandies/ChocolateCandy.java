@@ -1,5 +1,7 @@
 package Java.Candies.ChocolateCandies;
 
+import java.sql.Date;
+
 import Java.Candies.Candy;
 
 public class ChocolateCandy extends Candy {  
@@ -10,5 +12,9 @@ public class ChocolateCandy extends Candy {
 
   public ChocolateCandy() {
     super(weight, sugarLevel, calorieContent, shelfLifeMonths);
+  }
+
+  public ChocolateCandy(Date expirationDate) {
+    super(weight, sugarLevel, calorieContent, expirationDate);
   }
 }
