@@ -16,13 +16,6 @@ public abstract class Candy {
   private int calorieContent;  
   private Date expirationDate;
 
-  public Candy(int weight, int sugarLevel, int calorieContent, int shelfLifeMonths) {
-    this.weight = weight;
-    this.sugarLevel = sugarLevel;
-    this.calorieContent = calorieContent;        
-    this.expirationDate = Date.valueOf(LocalDate.now().plusDays((int)(shelfLifeMonths * 30 * Math.random())));
-  }  
-
   public Candy(int weight, int sugarLevel, int calorieContent, Date expirationDate) {
     this.weight = weight;
     this.sugarLevel = sugarLevel;
@@ -50,37 +43,21 @@ public abstract class Candy {
     return null;
   }
 
-  public static Candy createCandyByClassName(String classname, Date expirationDate) {
-    switch (classname) {
-      case "ChocolateCandy":
-        return new ChocolateCandy(expirationDate);
-      case "Lollipop":
-        return new Lollipop(expirationDate);
-      case "JellyCandy":
-        return new JellyCandy(expirationDate);
-      case "ChocolateNutCandy":
+  public static Candy createCandyByClassId(int classId, Date expirationDate) {
+    switch (classId) {
+      case 1:
+      return new JellyCandy(expirationDate);
+      case 2:
+      return new Lollipop(expirationDate);
+      case 3:
+      return new ChocolateCandy(expirationDate);
+      case 4:
         return new ChocolateNutCandy(expirationDate);
-      case "ChocolateNougatCandy":
+      case 5:
         return new ChocolateNougatCandy(expirationDate);
-      default:
-        return new ChocolateLiquorCandy(expirationDate);      
+      case 6:
+        return new ChocolateLiquorCandy(expirationDate);              
     }
-  }
-
-  public static Candy createCandyByClassName(String classname) {
-    switch (classname) {
-      case "ChocolateCandy":
-        return new ChocolateCandy();
-      case "Lollipop":
-        return new Lollipop();
-      case "JellyCandy":
-        return new JellyCandy();
-      case "ChocolateNutCandy":
-        return new ChocolateNutCandy();
-      case "ChocolateNougatCandy":
-        return new ChocolateNougatCandy();
-      default:
-        return new ChocolateLiquorCandy();      
-    }
+    return null;
   }
 }

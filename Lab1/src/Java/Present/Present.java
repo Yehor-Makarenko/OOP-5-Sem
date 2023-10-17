@@ -1,23 +1,30 @@
 package Java.Present;
 
 import java.util.ArrayList;
+import java.util.Optional;
+
+import javax.swing.text.html.Option;
 
 import Java.Candies.Candy;
 import Java.Database.DBController;
+import Java.Present.PresentSizes.PresentSizes;
 
 public class Present {
   private ArrayList<Candy> candies; 
   private int weight; 
   private int id;
+  private PresentSizes size;
 
-  public Present() {
+  public Present(PresentSizes size) {
     candies = new ArrayList<Candy>();
     weight = 0;
     id = DBController.getMaxPresentID() + 1;
-    DBController.createPresent();
+    this.size = size;
+    DBController.createPresent(size);    
   }
 
-  private Present(ArrayList<Candy> candies, int weight, int id) {
+  private Present(PresentSizes size, ArrayList<Candy> candies, int weight, int id) {
+    this.size = size;
     this.candies = candies;
     this.weight = weight;
     this.id = id;
@@ -29,19 +36,35 @@ public class Present {
 
   public static Present getPresentByID(int id) {    
     ArrayList<Candy> candies = DBController.getCandiesByPresentID(id);
-    int weight = DBController.getPresentWeightByID(id);
+    PresentSizes size = DBController.getPresentSizeById(id);
+    int weight = 0;
+    for (int i = 0; i < candies.size(); i++) {
+      weight += candies.get(i).getWeight();
+    }
 
-    return new Present(candies, weight, id);
+    return new Present(size, candies, weight, id);
   }
 
   public void put(Candy candy) {
+    if (!hasSpace()) {
+      System.out.println("No more space");
+      return;
+    }
     candies.add(candy);
     weight += candy.getWeight();
-    DBController.addCandyToPresent(candy, id, weight, candies.size());
+    DBController.addCandyToPresent(id, candy);
+  }
+
+  public boolean hasSpace() {
+    return size.getMaxCandies() > candies.size();
   }
 
   public int getWeight() {
     return weight;
+  }
+
+  public PresentSizes getSize() {
+    return size;
   }
 
   public void sortByWeight() {
@@ -58,6 +81,11 @@ public class Present {
 
   public void sortByExpirationDate() {
     candies.sort((c1, c2) -> c1.getExpirationDate().compareTo(c2.getExpirationDate()));    
+  }
+
+  public Candy getCandyBySugarLevel(int min, int max) {
+    Optional<Candy> found = candies.stream().filter(candy -> candy.getSugarLevel() >= min && candy.getSugarLevel() <= max).findFirst();
+    return found.isPresent() ? found.get() : null;
   }
 
   public void print() {
