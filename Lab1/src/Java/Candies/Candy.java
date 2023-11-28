@@ -1,7 +1,6 @@
 package Java.Candies;
 
 import java.sql.Date;
-import java.time.LocalDate;
 
 import Java.Candies.ChocolateCandies.ChocolateCandy;
 import Java.Candies.ChocolateCandies.ChocolateCandiesWithFilling.ChocolateLiquorCandy.ChocolateLiquorCandy;

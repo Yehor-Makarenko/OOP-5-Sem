@@ -3,8 +3,6 @@ package Java.Present;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import javax.swing.text.html.Option;
-
 import Java.Candies.Candy;
 import Java.Database.DBController;
 import Java.Present.PresentSizes.PresentSizes;
