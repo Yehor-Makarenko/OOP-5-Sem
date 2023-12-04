@@ -1,1 +1,13 @@
-<?xml version="1.0" encoding="WINDOWS-1251" standalone="no"?><Gems><Gem Color="green" FacetCount="5" GemID="0" Name="A" Origin="B" Preciousness="precious" Transparency="40.0" Value="5.0"/><Gem Color="green" FacetCount="5" GemID="1" Name="C" Origin="B" Preciousness="precious" Transparency="40.0" Value="5.0"/><Gem Color="red" FacetCount="5" GemID="2" Name="D" Origin="B" Preciousness="precious" Transparency="40.0" Value="5.0"/><Gem Color="blue" FacetCount="5" GemID="3" Name="F" Origin="B" Preciousness="precious" Transparency="40.0" Value="5.0"/></Gems>
+<?xml version="1.0" encoding="WINDOWS-1251"?><Gems>
+    <Gem GemID="0">
+        <Name>Diamond</Name>
+        <Preciousness>precious</Preciousness>
+        <Origin>USA</Origin>
+        <VisualParameters>
+            <Color>blue</Color>
+            <Transparency>90.0</Transparency>
+            <FacetCount>8</FacetCount>
+        </VisualParameters>
+        <Value>5.0</Value>
+    </Gem>
+</Gems>

@@ -1,4 +1,4 @@
-package oop.xmlParser;
+package oop.parsers.domParser;
 
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;

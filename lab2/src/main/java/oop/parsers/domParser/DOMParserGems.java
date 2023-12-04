@@ -1,9 +1,8 @@
-package oop.xmlParser;
+package oop.parsers.domParser;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -30,14 +29,14 @@ import org.xml.sax.SAXException;
 import oop.gem.Gem;
 import oop.gem.enums.GemColor;
 import oop.gem.enums.GemPreciousness;
+import oop.parsers.Parser;
 
-public class GemsParser {
-  private ArrayList<Gem> gems = new ArrayList<>();
+public class DOMParserGems implements Parser {
   private DocumentBuilder db;
   private Document doc;    
   private Validator validator;
 
-  public GemsParser(String xmlSchemaFilePath) {    
+  public DOMParserGems(String xmlSchemaFilePath) {    
     DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
     SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
     Schema s = null;
@@ -57,58 +56,7 @@ public class GemsParser {
     }
   }
 
-  public int getSize() {
-    return gems.size();
-  }
-
-  public Gem getGem(int index) {
-    return gems.get(index);
-  }
-
-  public void addGem(String name, GemPreciousness preciousness, String origin, GemColor color, double transparency, int facetCount, double value) {
-    gems.add(new Gem(name, preciousness, origin, color, transparency, facetCount, value));
-  }
-
-  public void deleteGem(int index) {
-    gems.remove(gems.get(index));
-  }
-
-  public void sortByName() {
-    Comparator<Gem> comp = Comparator.comparing(gem -> gem.getName());
-    gems.sort(comp);
-  } 
-
-  public void sortByPreciousness() {
-    Comparator<Gem> comp = Comparator.comparing(gem -> gem.getPreciousness().toString());
-    gems.sort(comp);
-  } 
-
-  public void sortByOrigin() {
-    Comparator<Gem> comp = Comparator.comparing(gem -> gem.getOrigin());
-    gems.sort(comp);
-  } 
-
-  public void sortByColor() {
-    Comparator<Gem> comp = Comparator.comparing(gem -> gem.getColor().toString());
-    gems.sort(comp);
-  } 
-
-  public void sortByTransparency() {
-    Comparator<Gem> comp = Comparator.comparing(gem -> gem.getTransparency());
-    gems.sort(comp);
-  }
-
-  public void sortByFacetCount() {
-    Comparator<Gem> comp = Comparator.comparing(gem -> gem.getFacetCount());
-    gems.sort(comp);
-  }
-
-  public void sortByValue() {
-    Comparator<Gem> comp = Comparator.comparing(gem -> gem.getValue());
-    gems.sort(comp);
-  }
-
-  public void loadFromFile(String filePath) {
+  public ArrayList<Gem> loadFromFile(String filePath) {
     try {
       doc = db.parse(new File(filePath));
     } catch (SAXException | IOException e) {            
@@ -116,32 +64,47 @@ public class GemsParser {
     }
     Element root = doc.getDocumentElement();
     NodeList fileGems = root.getElementsByTagName("Gem");
-    gems.clear();
+    ArrayList<Gem> gems = new ArrayList<>();
     
     for (int i = 0; i < fileGems.getLength(); i++) {
-      Element gemData = (Element) fileGems.item(i);      
-      addGem(gemData.getAttribute("Name"), GemPreciousness.getPreciousness(gemData.getAttribute("Preciousness")), 
-        gemData.getAttribute("Origin"), GemColor.getColor(gemData.getAttribute("Color")), 
-        Double.parseDouble(gemData.getAttribute("Transparency")), Integer.parseInt(gemData.getAttribute("FacetCount")),
-        Double.parseDouble(gemData.getAttribute("Value")));      
-    }        
+      Element gemData = (Element) fileGems.item(i);
+      
+      String name = gemData.getElementsByTagName("Name").item(0).getTextContent();
+      GemPreciousness preciousness = GemPreciousness.getPreciousness(gemData.getElementsByTagName("Preciousness").item(0).getTextContent());
+      String origin = gemData.getElementsByTagName("Origin").item(0).getTextContent();
+      Element visualParameters = (Element) gemData.getElementsByTagName("VisualParameters").item(0);
+      GemColor color = GemColor.getColor(visualParameters.getElementsByTagName("Color").item(0).getTextContent());
+      Double transparency = Double.parseDouble(visualParameters.getElementsByTagName("Transparency").item(0).getTextContent());
+      Integer facetCount = Integer.parseInt(visualParameters.getElementsByTagName("FacetCount").item(0).getTextContent());
+      Double value = Double.parseDouble(gemData.getElementsByTagName("Value").item(0).getTextContent());
+
+      gems.add(new Gem(name, preciousness, origin, color, transparency, facetCount, value));      
+    }      
+    
+    return gems;
   }
 
-  public void saveToFile(String filePath) {
-    doc = db.newDocument();    
+  public void saveToFile(String filePath, ArrayList<Gem> gems) {
+    doc = db.newDocument();
     doc.appendChild(doc.createElement("Gems"));
     
     for (int i = 0; i < gems.size(); i++) {
       Gem gem = gems.get(i);
       Element gemNode = doc.createElement("Gem");
-      gemNode.setAttribute("GemID", String.valueOf(i));
-      gemNode.setAttribute("Name", gem.getName());
-      gemNode.setAttribute("Preciousness", gem.getPreciousness().toString());
-      gemNode.setAttribute("Origin", gem.getOrigin());
-      gemNode.setAttribute("Color", gem.getColor().toString());
-      gemNode.setAttribute("Transparency", String.valueOf(gem.getTransparency()));
-      gemNode.setAttribute("FacetCount", String.valueOf(gem.getFacetCount()));
-      gemNode.setAttribute("Value", String.valueOf(gem.getValue()));
+      gemNode.setAttribute("GemID", String.valueOf(i)); 
+      
+      addChildElement(doc, gemNode, "Name", gem.getName());
+      addChildElement(doc, gemNode, "Preciousness", gem.getPreciousness().toString());
+      addChildElement(doc, gemNode, "Origin", gem.getOrigin());
+
+      Element visualParametersElement = doc.createElement("VisualParameters");
+      gemNode.appendChild(visualParametersElement);
+
+      addChildElement(doc, visualParametersElement, "Color", gem.getColor().toString());
+      addChildElement(doc, visualParametersElement, "Transparency", String.valueOf(gem.getTransparency()));
+      addChildElement(doc, visualParametersElement, "FacetCount", String.valueOf(gem.getFacetCount()));
+      
+      addChildElement(doc, gemNode, "Value", String.valueOf(gem.getValue()));
 
       doc.getDocumentElement().appendChild(gemNode);
     }
@@ -169,11 +132,10 @@ public class GemsParser {
     }
   }
 
-  public void print() {
-    System.out.println("Gems:");
-    for (Gem gem: gems) {
-      System.out.println("\t" + gem);
-    }
+  private static void addChildElement(Document doc, Element parentElement, String elementName, String textContent) {
+    Element childElement = doc.createElement(elementName);
+    childElement.setTextContent(textContent);
+    parentElement.appendChild(childElement);
   }
 }
 

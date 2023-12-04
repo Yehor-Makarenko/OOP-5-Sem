@@ -100,7 +100,7 @@ public class Gem {
                 "name='" + name + '\'' +
                 ", preciousness='" + preciousness.toString() + '\'' +
                 ", origin='" + origin + '\'' +
-                "color='" + color.toString() + '\'' +
+                ", color='" + color.toString() + '\'' +
                 ", transparency=" + transparency +
                 ", facetCount=" + facetCount +
                 ", value=" + value +

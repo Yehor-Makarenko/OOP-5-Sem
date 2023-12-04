@@ -1,6 +1,5 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-  <!-- Definition of simple types -->
   <xs:simpleType name="preciousnessType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="precious"/>
@@ -15,7 +14,6 @@
       <xs:enumeration value="yellow"/>
       <xs:enumeration value="blue"/>
       <xs:enumeration value="purple"/>
-      <!-- Add more colors as needed -->
     </xs:restriction>
   </xs:simpleType>
 
@@ -41,41 +39,26 @@
     </xs:sequence>
   </xs:complexType>
 
-  <!-- Definition of complex types -->
   <xs:element name="Gems">
     <xs:complexType>
       <xs:sequence>
         <xs:element name="Gem" maxOccurs="unbounded" minOccurs="0">
-          <xs:complexType>    
-            <xs:attribute name="GemID" type="xs:byte" use="required"/>        
-            <xs:attribute name="Name" type="xs:string" use="required"/>
-            <xs:attribute name="Preciousness" type="preciousnessType" use="required"/>
-            <xs:attribute name="Origin" type="xs:string" use="required"/>
-            <xs:attribute name="Color" type="colorType" use="required"/>
-            <xs:attribute name="Transparency" use="required">
-              <xs:simpleType>
-                <xs:restriction base="xs:decimal">
-                  <xs:minInclusive value="0"/>
-                  <xs:maxInclusive value="100"/>
-                </xs:restriction>
-              </xs:simpleType>
-            </xs:attribute>
-            <xs:attribute name="FacetCount" use="required">
-              <xs:simpleType>
-                <xs:restriction base="xs:integer">
-                  <xs:minInclusive value="4"/>
-                  <xs:maxInclusive value="15"/>
-                </xs:restriction>
-              </xs:simpleType>
-            </xs:attribute>
-            <xs:attribute name="Value" use="required">
-              <xs:simpleType>
-                <xs:restriction base="xs:decimal">
-                  <xs:minExclusive value="0"/>
-                </xs:restriction>
-              </xs:simpleType>
-            </xs:attribute>                    
-          </xs:complexType>
+          <xs:complexType>
+            <xs:all>                      
+              <xs:element name="Name" type="xs:string"/>
+              <xs:element name="Preciousness" type="preciousnessType"/>
+              <xs:element name="Origin" type="xs:string"/>
+              <xs:element name="VisualParameters" type="VisualParametersType"/>
+              <xs:element name="Value">
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:minExclusive value="0"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>                 
+            </xs:all>
+            <xs:attribute name="GemID" type="xs:byte"/>  
+          </xs:complexType>          
         </xs:element>
       </xs:sequence>      
     </xs:complexType>
