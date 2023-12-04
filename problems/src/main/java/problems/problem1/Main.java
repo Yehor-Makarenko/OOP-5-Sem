@@ -1,7 +1,4 @@
-package problems;
-
-import problems.problem1.Client;
-import problems.problem1.Server;
+package problems.problem1;
 
 public class Main {
     public static void main(String[] args) {
